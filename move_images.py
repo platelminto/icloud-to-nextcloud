@@ -3,6 +3,9 @@ import shutil
 import random
 import string
 
+# Global variable to control move/copy behavior. Set to True to make it faster. Not very dangerous to do so - we're just moving files around.
+MOVE_DONT_COPY = False
+
 def random_string(length=10):
     """Generate a random string of fixed length"""
     letters = string.ascii_lowercase
@@ -27,22 +30,30 @@ def process_icloud_folders(base_dir):
                             old_path = os.path.join(photos_dir, filename)
                             new_filename = f"{random_string()}.csv"
                             new_path = os.path.join(photos_all_dir, new_filename)
-                            shutil.copy2(old_path, new_path)
-                            print(f"Copied and renamed: {filename} -> {new_filename}")
+                            if MOVE_DONT_COPY:
+                                shutil.move(old_path, new_path)
+                                print(f"Moved and renamed: {filename} -> {new_filename}")
+                            else:
+                                shutil.copy2(old_path, new_path)
+                                print(f"Copied and renamed: {filename} -> {new_filename}")
 
-                    # Copy contents of Photos directory
+                    # Process contents of Photos directory
                     for item in os.listdir(photos_dir):
                         old_path = os.path.join(photos_dir, item)
                         new_path = os.path.join(photos_all_dir, "Photos", item)
                         # Create Photos subdirectory in Photos_All if it doesn't exist
                         os.makedirs(os.path.join(photos_all_dir, "Photos"), exist_ok=True)
-                        # Copy the item
-                        if os.path.isdir(old_path):
-                            shutil.copytree(old_path, new_path, dirs_exist_ok=True)
+                        # Move or copy the item
+                        if MOVE_DONT_COPY:
+                            shutil.move(old_path, new_path)
+                            print(f"Moved: {item} to Photos_All/Photos/")
                         else:
-                            shutil.copy2(old_path, new_path)
-                        # print(f"Copied: {item} to Photos_All/Photos/")
+                            if os.path.isdir(old_path):
+                                shutil.copytree(old_path, new_path, dirs_exist_ok=True)
+                            else:
+                                shutil.copy2(old_path, new_path)
+                            print(f"Copied: {item} to Photos_All/Photos/")
 
 if __name__ == "__main__":
-    base_directory = "/home/platelminto/Documents/local/apple_backup_20082024"  # Replace with your actual path
+    base_directory = "."  # Replace with the directory containing the entire iCloud backup
     process_icloud_folders(base_directory)
