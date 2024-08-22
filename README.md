@@ -135,9 +135,14 @@ After running these scripts, your photos will be organized in a single folder wi
 Note: Make sure to review and modify the paths in each script before running them. The scripts are designed to create new data without overwriting original files, but always ensure you have backups before proceeding.
 
 ## Connecting Devices to Nextcloud
-
 ### Linux
-1. Add an online account for Nextcloud in your system settings
+1. Use the "Online Accounts" application to add your Nextcloud account.
+
+Once set up, Nextcloud will automatically integrate with various GNOME applications. For example:
+- Calendar app for calendar sync
+- Evolution for calendars and contacts
+
+Note: Available integrations may vary depending on your Linux distribution and desktop environment.
 
 ### Android
 Note: It's recommended to use F-Droid to download and install all the following apps, as it provides open-source versions.
