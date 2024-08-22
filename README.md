@@ -1,6 +1,16 @@
 # iCloud to Nextcloud Migration Guide
 
-This repository documents the process of migrating data from iCloud to Nextcloud, including scripts and step-by-step instructions.
+This guide documents the process of migrating data from iCloud to Nextcloud, based on personal experience. It includes scripts and step-by-step instructions that may be helpful in your migration journey.
+
+## Who This Guide Is For
+
+This guide is intended for users who are:
+- Comfortable with command-line interfaces
+- Familiar with Docker and Linux environments
+- Possibly new to Nextcloud but experienced with general tech setups
+- Looking to migrate their data from iCloud to a self-hosted Nextcloud instance
+
+Note that this guide reflects a personal migration process and may not cover all scenarios. You might need to adapt some steps to your specific situation.
 
 ## Table of Contents
 1. [Setting Up Nextcloud](#setting-up-nextcloud)
@@ -14,6 +24,7 @@ This repository documents the process of migrating data from iCloud to Nextcloud
 6. [Connecting Devices to Nextcloud](#connecting-devices-to-nextcloud)
    - [Linux](#linux)
    - [Android](#android)
+
 
 ## Setting Up Nextcloud
 
