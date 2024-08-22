@@ -7,8 +7,8 @@ import string
 MOVE_DONT_COPY = False
 
 def random_string(length=10):
-    """Generate a random string of fixed length"""
-    letters = string.ascii_lowercase
+    """Generate a random string of fixed length of lowercase letters, uppercase, and numbers"""
+    letters = string.ascii_letters + string.digits
     return ''.join(random.choice(letters) for i in range(length))
 
 def process_icloud_folders(base_dir):
