@@ -14,17 +14,16 @@ Note that this guide reflects a personal migration process and may not cover all
 
 ## Table of Contents
 1. [Setting Up Nextcloud](#setting-up-nextcloud)
-2. [Setting Up Memories in Nextcloud](#setting-up-memories-in-nextcloud)
-3. [Downloading iCloud Data](#downloading-icloud-data)
-4. [Using the Scripts](#using-the-scripts)
-5. [Migrating Specific Data Types](#migrating-specific-data-types)
+   - [Setting Up Memories in Nextcloud](#setting-up-memories-in-nextcloud)
+2. [Downloading iCloud Data](#downloading-icloud-data)
+3. [Data Migration Process](#data-migration-process)
    - [Calendars](#calendars)
    - [Contacts](#contacts)
    - [Photos](#photos)
-6. [Connecting Devices to Nextcloud](#connecting-devices-to-nextcloud)
+4. [Connecting Devices to Nextcloud](#connecting-devices-to-nextcloud)
    - [Linux](#linux)
    - [Android](#android)
-
+5. [TODO](#todo)
 
 ## Setting Up Nextcloud
 
@@ -34,9 +33,15 @@ Before beginning the migration process, it's recommended to set up your Nextclou
 
 2. After setting up Nextcloud, proceed to set up the Memories app as described in the next section.
 
-## Setting Up Memories in Nextcloud
+### Setting Up Memories in Nextcloud
 
-It's important to set up the Memories app before running the migration scripts. This will allow for immediate indexing of your photos and videos as they are uploaded.
+The Memories app in Nextcloud is highly recommended for managing your photo collection, especially when migrating from iCloud. Here's why it's important:
+
+- It provides features similar to what you're used to in iCloud, such as timeline view, face recognition, and location-based browsing.
+- It relies on EXIF data to organize and display your photos effectively, which is crucial for the migration process we'll describe later.
+- It can handle the playback of various video formats, including those commonly used in iCloud.
+
+To set up Memories:
 
 1. Install the Memories app in your Nextcloud instance if you haven't already.
 
@@ -57,7 +62,7 @@ To download all your iCloud data:
 3. Request a copy of your data
 4. Wait for Apple to process your request and download the data when available
 
-## Using the Scripts
+## Data Migration Process
 
 Before proceeding with the migration, please note the following about the scripts in this repository:
 
@@ -70,8 +75,6 @@ Before proceeding with the migration, please note the following about the script
 - Some scripts contain options to change from only-copy to overwrite/move directly. This can be faster for large migrations. Review the script options carefully before using these modes.
 
 - Make sure to review and modify the paths before running any scripts. The paths should point to the relevant data for each script (e.g., vCard files for contact scripts, photo directories for photo scripts).
-
-## Migrating Specific Data Types
 
 ### Calendars
 
@@ -134,12 +137,12 @@ Note: Make sure to review and modify the paths in each script before running the
 ## Connecting Devices to Nextcloud
 
 ### Linux
-
 1. Add an online account for Nextcloud in your system settings
 
 ### Android
+Note: It's recommended to use F-Droid to download and install all the following apps, as it provides open-source versions.
 
-1. Install the Nextcloud app from the Play Store
+1. Install the Nextcloud app.
 2. Set up auto-upload in settings for various photo libraries (e.g., Gallery, Screenshots)
 3. For calendar and contacts sync:
    - Install DAVx5
@@ -148,4 +151,5 @@ Note: Make sure to review and modify the paths in each script before running the
 5. For notes, install the Nextcloud Notes app
 6. For photos, install the Memories app
 
-[Additional sections and details to be added]
+## TODO
+- Recreate albums in Nextcloud using the iCloud albums CSV file
