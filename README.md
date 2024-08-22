@@ -29,7 +29,9 @@ Before proceeding with the migration, please note the following about the script
   - For Python scripts: Look for a variable that sets the input or output directory.
   - For Bash scripts: Check for variables at the beginning of the script that define file or directory paths.
 
-- All scripts create new data and will not overwrite your original files. You can run them without worrying about losing your original data.
+- By default, all scripts create new data and will not overwrite your original files. You can run them without worrying about losing your original data.
+
+- Some scripts contain options to change from only-copy to overwrite/move directly. This can be faster for large migrations. Review the script options carefully before using these modes.
 
 - Make sure to review and modify the paths before running any scripts. The paths should point to the relevant data for each script (e.g., vCard files for contact scripts, photo directories for photo scripts).
 
@@ -52,6 +54,7 @@ Before proceeding with the migration, please note the following about the script
    ```
    bash contacts/merge_vcfs.sh
    ```
+   You can find the script here: [merge_vcfs.sh](./contacts/merge_vcfs.sh)
 3. In Nextcloud, go to Contacts
 4. Navigate to Settings
 5. Select "Import"
@@ -60,7 +63,7 @@ Before proceeding with the migration, please note the following about the script
 ### Photos
 
 1. Use the following scripts to prepare your photos:
-   - [Script to extract photos from different folders into one]
+   - [move_images.py](./photos/move_images.py): Script to extract photos from different folders into one
    - [Script to merge metadata CSVs]
    - [Script to add metadata as EXIF to photo files]
 2. Upload photos to Nextcloud
