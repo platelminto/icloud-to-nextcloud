@@ -60,7 +60,7 @@ To download all your iCloud data:
 1. Go to [privacy.apple.com](https://privacy.apple.com)
 2. Log in with your Apple ID
 3. Request a copy of your data
-4. Wait for Apple to process your request and download the data when available
+4. Wait for Apple to process your request and download the data when available. Apparently this can take up to a week - for me, it took 3-4 days.
 
 ## Data Migration Process
 
