@@ -50,5 +50,5 @@ def merge_csv_files(directory):
 
 
 if __name__ == "__main__":
-    photos_all_directory = "."  # Replace with the path of the directory containing all the random-named .csvs (probably inside `Photos_All`)
+    photos_all_directory = "."  # Replace with the path of the directory containing all the random-named .csvs (probably `Photos_All`)
     merge_csv_files(photos_all_directory)
