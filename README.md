@@ -3,15 +3,40 @@
 This repository documents the process of migrating data from iCloud to Nextcloud, including scripts and step-by-step instructions.
 
 ## Table of Contents
-1. [Downloading iCloud Data](#downloading-icloud-data)
-2. [Using the Scripts](#using-the-scripts)
-3. [Migrating Specific Data Types](#migrating-specific-data-types)
+1. [Setting Up Nextcloud](#setting-up-nextcloud)
+2. [Setting Up Memories in Nextcloud](#setting-up-memories-in-nextcloud)
+3. [Downloading iCloud Data](#downloading-icloud-data)
+4. [Using the Scripts](#using-the-scripts)
+5. [Migrating Specific Data Types](#migrating-specific-data-types)
    - [Calendars](#calendars)
    - [Contacts](#contacts)
    - [Photos](#photos)
-4. [Connecting Devices to Nextcloud](#connecting-devices-to-nextcloud)
+6. [Connecting Devices to Nextcloud](#connecting-devices-to-nextcloud)
    - [Linux](#linux)
    - [Android](#android)
+
+## Setting Up Nextcloud
+
+Before beginning the migration process, it's recommended to set up your Nextcloud instance:
+
+1. For ease of installation and maintenance, consider using Nextcloud AIO (All-In-One). You can find more information and installation instructions at [https://github.com/nextcloud/all-in-one](https://github.com/nextcloud/all-in-one).
+
+2. After setting up Nextcloud, proceed to set up the Memories app as described in the next section.
+
+## Setting Up Memories in Nextcloud
+
+It's important to set up the Memories app before running the migration scripts. This will allow for immediate indexing of your photos and videos as they are uploaded.
+
+1. Install the Memories app in your Nextcloud instance if you haven't already.
+
+2. Follow the installation guide at [https://memories.gallery/install/](https://memories.gallery/install/) for detailed setup instructions.
+
+3. It's highly recommended to set up hardware transcoding. This is especially important for videos from iCloud, as many of them use the HEVC codec, which browsers can't play directly. Hardware transcoding will ensure smooth playback of your videos.
+
+   - For instructions on setting up hardware transcoding, visit: [https://memories.gallery/hw-transcoding/](https://memories.gallery/hw-transcoding/)
+   - Hardware transcoding can significantly improve performance and reduce CPU usage when viewing videos in Memories.
+
+4. After completing the migration process and uploading your media, you may need to trigger a reindex of your photos and videos. This process will ensure that all your media is properly cataloged and that the new transcoding settings are applied.
 
 ## Downloading iCloud Data
 
@@ -25,9 +50,9 @@ To download all your iCloud data:
 
 Before proceeding with the migration, please note the following about the scripts in this repository:
 
-- Most scripts will need to have their directory paths modified to match your specific setup:
-  - For Python scripts: Look for a variable that sets the input or output directory.
-  - For Bash scripts: Check for variables at the beginning of the script that define file or directory paths.
+- You will need to modify hardcoded variables in the scripts to match your specific directory structure and file locations:
+  - For Bash scripts: Look for variables at the beginning of the script.
+  - For Python scripts: Look for variables inside the `if __name__ == "__main__":` block.
 
 - By default, all scripts create new data and will not overwrite your original files. You can run them without worrying about losing your original data.
 
@@ -62,12 +87,38 @@ Before proceeding with the migration, please note the following about the script
 
 ### Photos
 
-1. Use the following scripts to prepare your photos:
-   - [move_images.py](./photos/move_images.py): Script to extract photos from different folders into one
-   - [Script to merge metadata CSVs]
-   - [Script to add metadata as EXIF to photo files]
-2. Upload photos to Nextcloud
-   - If Nextcloud is on the same machine, consider copying files directly into Nextcloud's data directory for large collections
+When migrating photos from iCloud to Nextcloud, there are two main challenges:
+
+1. The iCloud download spreads photos across multiple directories, making organization difficult.
+2. The downloaded photos lack EXIF metadata, which is crucial for proper organization in Nextcloud, especially when using the [Memories app](https://apps.nextcloud.com/apps/memories).
+
+The Memories app in Nextcloud is highly recommended for managing your photo collection, as it provides features like timeline view, face recognition, and location-based browsing. However, it relies heavily on EXIF data to function effectively.
+
+To address these challenges and prepare your photos for optimal use with the Memories app, we'll use a series of scripts to consolidate the photos and restore the EXIF metadata. Here's the process:
+
+1. Extracting and moving photos:
+   - Script: [move_images.py](./photos/move_images.py)
+   - Purpose: This script extracts photos from various folders in your iCloud download and moves them all into a single folder: "Photos_All/Photos".
+   - Usage: Run the script, ensuring you've set the correct source path. The script will create the "Photos_All/Photos" directory in the same location as the source.
+
+2. Merging metadata CSV files:
+   - Script: [merge_csv.py](./photos/merge_csv.py)
+   - Purpose: In the iCloud download, you'll find several randomly named CSV files in the "Photos_All" folder. This script merges all these CSV files into a single metadata file.
+   - Usage: Run the script, pointing it to the "Photos_All" directory containing the CSV files.
+
+3. Adding EXIF data to photos:
+   - Script: [add_exif_data.py](./photos/add_exif_data.py)
+   - Purpose: This script takes the photos in the "Photos_All/Photos" folder and the merged CSV metadata file. It then processes the metadata and adds it as EXIF data to each image file.
+   - Usage: Run the script, ensuring you've set the correct paths for the photo directory and the merged metadata CSV file.
+   - Note: This process can take a considerable amount of time, potentially multiple hours for large collections (e.g., around 20,000 files). Please be patient and ensure your computer won't go to sleep during this process.
+
+After running these scripts, your photos will be organized in a single folder with all relevant metadata embedded as EXIF data. This will allow the Nextcloud Memories app to properly organize and display your photos. You can then proceed to upload these processed photos to Nextcloud:
+
+4. Upload photos to Nextcloud
+   - If Nextcloud is on the same machine, consider copying the processed files directly into Nextcloud's data directory for large collections.
+   - Otherwise, use the Nextcloud web interface or desktop client to upload the photos.
+
+Note: Make sure to review and modify the paths in each script before running them. The scripts are designed to create new data without overwriting original files, but always ensure you have backups before proceeding.
 
 ## Connecting Devices to Nextcloud
 
