@@ -40,6 +40,7 @@ The Memories app in Nextcloud is highly recommended for managing your photo coll
 - It provides features similar to what you're used to in iCloud, such as timeline view, face recognition, and location-based browsing.
 - It relies on EXIF data to organize and display your photos effectively, which is crucial for the migration process we'll describe later.
 - It can handle the playback of various video formats, including those commonly used in iCloud.
+- The default Nextcloud Photos app sucks.
 
 To set up Memories:
 
