@@ -108,8 +108,9 @@ def process_files(csv_path, photos_dir):
         print(f"{no_file}/{total} files not found.")
         print("Maths adds up check: ", updated + repaired + failed + no_file == total)
 
+    return updated, repaired, failed, no_file
 
-# Usage
-csv_path = './Photos_All/merged_photo_details.csv'
-photos_dir = './Photos_All/Photos'
-process_files(csv_path, photos_dir)
+if __name__ == '__main__':
+    csv_path = './Photos_All/merged_photo_details.csv'
+    photos_dir = './Photos_All/Photos'
+    process_files(csv_path, photos_dir)
