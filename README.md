@@ -135,18 +135,22 @@ To address these challenges and prepare your photos for optimal use with the Mem
    - Usage: Run the script after setting the appropriate variables for your file structure.
 
 5. Migrating albums:
+   First, locate your album information. In your iCloud download, look for an "Albums" directory within one of the many "iCloud Photos" part directories. This directory contains CSV files with information about your albums.
+
    There are two methods to migrate your albums:
 
    a. Using Memories albums directly (Recommended):
    - Script: [migrate_albums.py](./photos/migrate_albums.py)
    - Purpose: This script migrates your albums to Memories albums directly.
-   - Usage: Run the script after setting the appropriate variables.
-   - Note: This method is recommended as it avoids duplicating images that appear in multiple albums.
+   - Usage: 
+     1. First, ensure all your photos are uploaded to Nextcloud and properly indexed (see steps 6 and 7 below).
+     2. Run the script after setting the appropriate variables, pointing to the CSV files in the "Albums" directory you found earlier.
+   - Note: This method is recommended as it avoids duplicating images that appear in multiple albums and works directly with the Memories app.
 
    b. Creating directories for each album:
    - Script: [migrate_albums_to_dirs.py](./photos/migrate_albums_to_dirs.py)
    - Purpose: This script creates directories for each album and copies the photos into them.
-   - Usage: Run the script after setting the appropriate variables.
+   - Usage: Run the script after setting the appropriate variables, pointing to the CSV files in the "Albums" directory.
    - Note: This method will duplicate images if they are in multiple albums.
 
    If you choose method b and want to delete the original photos after copying:
@@ -155,10 +159,19 @@ To address these challenges and prepare your photos for optimal use with the Mem
    - Usage: Run this script only after successfully running migrate_albums_to_dirs.py and verifying the copies.
 
 After running these scripts, your photos will be organized with all relevant metadata embedded as EXIF data. This will allow the Nextcloud Memories app to properly organize and display your photos. You can then proceed to upload these processed photos to Nextcloud:
-
 6. Upload photos to Nextcloud
    - If Nextcloud is on the same machine, consider copying the processed files directly into Nextcloud's data directory for large collections.
-     - Note: If you copy files directly, permissions might get messed up. Make sure to fix the permissions after copying. You may need to run a command like `chown -R www-data:www-data /path/to/nextcloud/data` (adjust the user and group as necessary for your setup).
+   - Note: If you copy files directly, permissions will need to be fixed. After copying, run the following command, replacing `/path/to/nextcloud/data/user/files/Photos/Photos` with the actual path to your photos in the Nextcloud data directory:
+
+     ```bash
+     NCDATA=/path/to/nextcloud/data/user/files/Photos/Photos && \
+     sudo find "$NCDATA" -type d -exec chmod 750 {} \; && \
+     sudo find "$NCDATA" -type f -exec chmod 640 {} \; && \
+     sudo chown -R www-data:www-data "$NCDATA"
+     ```
+
+     This command sets the correct permissions (750 for directories, 640 for files) and changes the owner to www-data (adjust if your web server runs as a different user).
+
    - Otherwise, use the Nextcloud web interface or desktop client to upload the photos.
 
 7. After uploading, run the following commands to ensure Nextcloud recognizes all the new files and indexes them properly:
@@ -175,6 +188,8 @@ After running these scripts, your photos will be organized with all relevant met
    ```
 
    If you're not using Nextcloud AIO, adjust the commands according to your specific Nextcloud installation.
+
+8. If you chose method a for album migration (Using Memories albums directly), now is the time to run the [migrate_albums.py](./photos/migrate_albums.py) script. This ensures that all your photos are properly indexed in Nextcloud before creating the albums in Memories.
 
 Note: Make sure to review and modify the paths in each script before running them. The scripts are designed to create new data without overwriting original files, but always ensure you have backups before proceeding.
 
