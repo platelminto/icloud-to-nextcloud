@@ -23,7 +23,6 @@ Note that this guide reflects a personal migration process and may not cover all
 4. [Connecting Devices to Nextcloud](#connecting-devices-to-nextcloud)
    - [Linux](#linux)
    - [Android](#android)
-5. [TODO](#todo)
 
 ## Setting Up Nextcloud
 
