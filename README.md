@@ -71,9 +71,12 @@ Before proceeding with the migration, please note the following about the script
   - For Bash scripts: Look for variables at the beginning of the script.
   - For Python scripts: Look for variables inside the `if __name__ == "__main__":` block.
 
-- By default, all scripts create new data and will not overwrite your original files. You can run them without worrying about losing your original data.
+- By default, most scripts are set to copy files rather than move them directly. This is the safest option as it preserves your original data. However, it's generally fine and more efficient to move files directly:
+  - If you're confident in your setup and have backups, consider changing the scripts to move files instead of copying them.
+  - To do this, look for variables or options in the scripts that control whether files are copied or moved, and adjust them accordingly.
+  - Moving files directly can significantly speed up the migration process, especially for large collections.
 
-- Some scripts contain options to change from only-copy to overwrite/move directly. This can be faster for large migrations. Review the script options carefully before using these modes.
+- Always ensure you have backups of your data before running any migration scripts, regardless of whether you're copying or moving files.
 
 - Make sure to review and modify the paths before running any scripts. The paths should point to the relevant data for each script (e.g., vCard files for contact scripts, photo directories for photo scripts).
 
@@ -127,11 +130,52 @@ To address these challenges and prepare your photos for optimal use with the Mem
    - Usage: Run the script, ensuring you've set the correct paths for the photo directory and the merged metadata CSV file.
    - Note: This process can take a considerable amount of time, potentially multiple hours for large collections (e.g., around 20,000 files). Please be patient and ensure your computer won't go to sleep during this process.
 
-After running these scripts, your photos will be organized in a single folder with all relevant metadata embedded as EXIF data. This will allow the Nextcloud Memories app to properly organize and display your photos. You can then proceed to upload these processed photos to Nextcloud:
+4. (Optional) Adding EXIF data from filenames:
+   - Script: [add_exif_data_from_filename.py](./photos/add_exif_data_from_filename.py)
+   - Purpose: This script adds metadata to pictures if they have a date in their filename.
+   - Usage: Run the script after setting the appropriate variables for your file structure.
 
-4. Upload photos to Nextcloud
+5. Migrating albums:
+   There are two methods to migrate your albums:
+
+   a. Using Memories albums directly (Recommended):
+   - Script: [migrate_albums.py](./photos/migrate_albums.py)
+   - Purpose: This script migrates your albums to Memories albums directly.
+   - Usage: Run the script after setting the appropriate variables.
+   - Note: This method is recommended as it avoids duplicating images that appear in multiple albums.
+
+   b. Creating directories for each album:
+   - Script: [migrate_albums_to_dirs.py](./photos/migrate_albums_to_dirs.py)
+   - Purpose: This script creates directories for each album and copies the photos into them.
+   - Usage: Run the script after setting the appropriate variables.
+   - Note: This method will duplicate images if they are in multiple albums.
+
+   If you choose method b and want to delete the original photos after copying:
+   - Script: [delete_copied_album_photos.py](./photos/delete_copied_album_photos.py)
+   - Purpose: This script deletes the original photos after they've been copied to album directories.
+   - Usage: Run this script only after successfully running migrate_albums_to_dirs.py and verifying the copies.
+
+After running these scripts, your photos will be organized with all relevant metadata embedded as EXIF data. This will allow the Nextcloud Memories app to properly organize and display your photos. You can then proceed to upload these processed photos to Nextcloud:
+
+6. Upload photos to Nextcloud
    - If Nextcloud is on the same machine, consider copying the processed files directly into Nextcloud's data directory for large collections.
+     - Note: If you copy files directly, permissions might get messed up. Make sure to fix the permissions after copying. You may need to run a command like `chown -R www-data:www-data /path/to/nextcloud/data` (adjust the user and group as necessary for your setup).
    - Otherwise, use the Nextcloud web interface or desktop client to upload the photos.
+
+7. After uploading, run the following commands to ensure Nextcloud recognizes all the new files and indexes them properly:
+
+   For Nextcloud AIO (All-In-One) Docker setups, use this command structure:
+   ```
+   sudo docker exec --user www-data -it nextcloud-aio-nextcloud php occ [command]
+   ```
+
+   Run these specific commands:
+   ```
+   sudo docker exec --user www-data -it nextcloud-aio-nextcloud php occ files:scan --all
+   sudo docker exec --user www-data -it nextcloud-aio-nextcloud php occ memories:index
+   ```
+
+   If you're not using Nextcloud AIO, adjust the commands according to your specific Nextcloud installation.
 
 Note: Make sure to review and modify the paths in each script before running them. The scripts are designed to create new data without overwriting original files, but always ensure you have backups before proceeding.
 
@@ -156,6 +200,3 @@ Note: It's recommended to use F-Droid to download and install all the following 
 4. For WebCal calendars, install ICSx5
 5. For notes, install the Nextcloud Notes app
 6. For photos, install the Memories app
-
-## TODO
-- Recreate albums in Nextcloud using the iCloud albums CSV file
