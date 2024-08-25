@@ -62,9 +62,9 @@ def organize_photos(source_dir, csv_dir, destination_parent_dir, move_mode=False
 
 
 if __name__ == "__main__":
-    photos_dir = "/nextcloud/datadir/admin/files/Photos/Photos"  # Where your photos are
+    photos_dir = './Photos_All/Photos'  # Where your photos are
     csv_dir = "icloud_backup/Albums"  # Usually found in one of the iCloud Photos Part X directories
-    destination_parent_dir = "/nextcloud/datadir/admin/files/Photos"  # Usually just parent of photos_dir
+    destination_parent_dir = './Photos_All'  # Usually just parent of photos_dir
     move_mode = False
 
     organize_photos(photos_dir, csv_dir, destination_parent_dir, move_mode)

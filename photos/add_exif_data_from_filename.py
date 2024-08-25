@@ -90,7 +90,7 @@ def process_images(directory, processed_dir=None, move=False, in_place=False, re
 
 if __name__ == "__main__":
     # Configuration variables
-    input_directory = "/nextcloud/datadir/admin/files/Photos/Photos"  # Replace with your input directory path
+    input_directory = './Photos_All/Photos'  # Replace with your input directory path
     processed_directory = os.path.join(input_directory, "processed")
     move_files = False  # Set to True if you want to move files instead of copying
     in_place_edit = False  # Set to True for in-place editing (makes move_files useless)

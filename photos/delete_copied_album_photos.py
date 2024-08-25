@@ -26,7 +26,7 @@ def delete_photos(source_dir, csv_dir):
 
 
 if __name__ == "__main__":
-    photos_dir = "/nextcloud/datadir/admin/files/Photos/Photos"  # Where your photos are
+    photos_dir = './Photos_All/Photos'  # Where your photos are
     csv_dir = "icloud_backup/Albums"  # Usually found in one of the iCloud Photos Part X directories
 
     delete_photos(photos_dir, csv_dir)
