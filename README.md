@@ -159,6 +159,7 @@ To address these challenges and prepare your photos for optimal use with the Mem
    - Usage: Run this script only after successfully running migrate_albums_to_dirs.py and verifying the copies.
 
 After running these scripts, your photos will be organized with all relevant metadata embedded as EXIF data. This will allow the Nextcloud Memories app to properly organize and display your photos. You can then proceed to upload these processed photos to Nextcloud:
+
 6. Upload photos to Nextcloud
    - If Nextcloud is on the same machine, consider copying the processed files directly into Nextcloud's data directory for large collections.
    - Note: If you copy files directly, permissions will need to be fixed. After copying, run the following command, replacing `/path/to/nextcloud/data/user/files/Photos/Photos` with the actual path to your photos in the Nextcloud data directory:
