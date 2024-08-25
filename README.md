@@ -153,7 +153,7 @@ To address these challenges and prepare your photos for optimal use with the Mem
    - Usage: Run the script after setting the appropriate variables, pointing to the CSV files in the "Albums" directory.
    - Note: This method will duplicate images if they are in multiple albums.
 
-   If you choose method b and want to delete the original photos after copying:
+   If you choose method b) and want to delete the original photos after copying:
    - Script: [delete_copied_album_photos.py](./photos/delete_copied_album_photos.py)
    - Purpose: This script deletes the original photos after they've been copied to album directories.
    - Usage: Run this script only after successfully running migrate_albums_to_dirs.py and verifying the copies.
@@ -189,7 +189,7 @@ After running these scripts, your photos will be organized with all relevant met
 
    If you're not using Nextcloud AIO, adjust the commands according to your specific Nextcloud installation.
 
-8. If you chose method a for album migration (Using Memories albums directly), now is the time to run the [migrate_albums.py](./photos/migrate_albums.py) script. This ensures that all your photos are properly indexed in Nextcloud before creating the albums in Memories.
+8. If you chose method a) for album migration (Using Memories albums directly), now is the time to run the [migrate_albums.py](./photos/migrate_albums.py) script.
 
 Note: Make sure to review and modify the paths in each script before running them. The scripts are designed to create new data without overwriting original files, but always ensure you have backups before proceeding.
 
