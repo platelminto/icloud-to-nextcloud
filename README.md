@@ -57,10 +57,11 @@ To set up Memories:
 ## Downloading iCloud Data
 
 To download all your iCloud data:
-1. Go to [privacy.apple.com](https://privacy.apple.com)
-2. Log in with your Apple ID
-3. Request a copy of your data
-4. Wait for Apple to process your request and download the data when available. Apparently this can take up to a week - for me, it took 3-4 days.
+1. Disable Advanced Data Protection if enabled, otherwise Apple won't have access to your encrypted data and will send only the metadata they have. Visit [https://support.apple.com/en-us/108756](https://support.apple.com/en-us/108756) for more information 
+2. Go to [privacy.apple.com](https://privacy.apple.com)
+3. Log in with your Apple ID
+4. Request a copy of your data
+5. Wait for Apple to process your request and download the data when available. Apparently this can take up to a week - for me, it took 3-4 days.
 
 ## Data Migration Process
 
